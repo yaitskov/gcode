@@ -1,0 +1,10 @@
+/.idea
+*.iml
+/target
+/apache-jmeter-*
+*.log
+/test-results*
+/test-res
+*.ini
+*.csv
+*.log
