@@ -21,6 +21,19 @@ public class MaterialCounter implements CmdFilter {
 
     @Override
     public void process(Command cmd) {
-
+        if (cmd.getLetter() == CmdCode.G && cmd.getNumber() == 1) {
+            int coords = 0;
+            BigDecimal length = null;
+            for (CmdArg arg : cmd.getArgs()) {
+                if (arg.getType().isCoord()) {
+                    coords += 1;
+                } else if (arg.getType() == CmdArgType.E) {
+                    length = arg.getValue();
+                }
+            }
+            if (coords > 0 && length != null) {
+                total = total.add(length);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ package net.sf.dan.gcode;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,18 +42,20 @@ public class EntryPoint {
         BufferedReader reader = new BufferedReader(isr);
 
         long lineNumber = 0;
-
+        String line = null;
         try {
             while (true) {
                 lineNumber += 1;
-                String line = reader.readLine();
+                line = reader.readLine();
                 if (line == null) {
                     break;
                 }
                 parser.process(line);
             }
-        } catch (IOException e) {
-            System.out.println("error happend at line " + lineNumber + " exception " + e.getMessage());
+        } catch (Throwable e) {
+            System.out.println("cannot parse line number: " + lineNumber
+                    + "\nbody: " + line
+                    + "\nexception: " + e.getMessage());
             System.exit(1);
         }
 
