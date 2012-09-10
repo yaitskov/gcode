@@ -7,12 +7,22 @@
     <groupId>net.sf.dan</groupId>
     <artifactId>gcode</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <name>Material counter for gcode models</name>
+    <description>
+        This software analyze gcode models for 3D printers
+        to predict amount of material to be used to
+        create a model.
+
+        The program sums lengths of charged extruders. Further weight of
+        a model can be got over some factor.
+    </description>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -68,6 +78,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
