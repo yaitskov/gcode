@@ -1,0 +1,5 @@
+
+Program for gcode files that are processed by 3d printers
+
+It sums how many extruder (length) is required for the model specified 
+in the gcode file.
