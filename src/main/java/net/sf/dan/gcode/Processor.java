@@ -68,7 +68,7 @@ public class Processor {
         for (int i = 1; i < pairs.length; ++i) {
             CmdArg arg = new CmdArg();
             arg.setType(CmdArgType.valueOf(pairs[i].substring(0,1).toUpperCase()));
-            arg.setValue(new BigDecimal(pairs[i].substring(1)));
+            arg.setValue(Double.parseDouble(pairs[i].substring(1)));
             result[i - 1] = arg;
         }
         return result;

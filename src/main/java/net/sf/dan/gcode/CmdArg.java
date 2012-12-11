@@ -7,7 +7,7 @@ import java.math.BigDecimal;
  */
 public class CmdArg {
     private CmdArgType type;
-    private BigDecimal value;
+    private double value;
 
     public CmdArgType getType() {
         return type;
@@ -17,11 +17,11 @@ public class CmdArg {
         this.type = type;
     }
 
-    public BigDecimal getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(BigDecimal value) {
+    public void setValue(double value) {
         this.value = value;
     }
 }

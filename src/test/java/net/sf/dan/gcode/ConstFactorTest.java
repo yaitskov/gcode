@@ -20,7 +20,7 @@ public class ConstFactorTest {
         MaterialCounter mc = new MaterialCounter();
         p.addFilter(mc);
         p.processFile(new FileInputStream(file));
-        return mc.getTotal().doubleValue();
+        return mc.getTotal();
     }
 
     @Test
@@ -36,24 +36,36 @@ public class ConstFactorTest {
         });
         double[] lengths = new double[files.length];
         double[] ks = new double[files.length];
+        double[] weights = new double[files.length];
         double  ksum = 0.0;
         for (int i = 0; i < files.length; ++i) {
             lengths[i] = getLength(files[i]);
-            double weight = getWeight(files[i]);
-            ks[i] = lengths[i] / weight;
+            weights[i] = getWeight(files[i]);
+            ks[i] = lengths[i] / weights[i];
             ksum += ks[i];
-            logger.debug(String.format("file %-30s => %11.4f / %4.0f = %11.4f",
-                    files[i].getName(), lengths[i], weight, ks[i]));
-
         }
         logger.debug("calculation of the factor");
 
         double avr = ksum / ks.length;
         logger.debug("average " + avr);
-        for (double k : ks) {
-            double deviation = k - avr;
-            logger.debug("deviation " + deviation);
+        logger.debug(String.format("file %-28s = %11s / w(g)   %11s; avr           fl      wdelta  wpercent", "", "length", "k"));
+        double devSum = 0.0;
+        double sumWeight = 0.0;
+        for (int i = 0; i < ks.length; ++i) {
+            double predictedWeight = lengths[i] / avr;
+            double weightDevi = Math.abs(weights[i] - predictedWeight);
+            devSum += weightDevi;
+            double percent = weightDevi / weights[i] * 100.0;
+            sumWeight += weights[i];
+            logger.debug(String.format("file %-28s = %11.4f / %4.0f = %11.4f; %8.4f, %8.4f, %7.4f %5.2f%%",
+                    files[i].getName(), lengths[i], weights[i], ks[i], avr, predictedWeight,
+                    weightDevi, percent));
+//            logger.debug(String.format("deviation %11.4f => %5.2f",
+//                    deviation, Math.abs(ks[i] - avr)/ks[i] * 100.0));
         }
+
+        logger.debug(String.format("**** TOTAL DEVIATION  %.2fg and weight %.2fg *******",
+                devSum, sumWeight));
     }
 
     double getWeight(File f) {

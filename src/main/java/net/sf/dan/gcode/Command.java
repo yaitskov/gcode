@@ -15,6 +15,15 @@ public class Command {
         this.args = args;
     }
 
+    CmdArg getArgument(CmdArgType type) {
+        for (CmdArg arg : args) {
+            if (arg.getType() == type) {
+                return arg;
+            }
+        }
+        return null;
+    }
+
     public CmdCode getLetter() {
         return letter;
     }
